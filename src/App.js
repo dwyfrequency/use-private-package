@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Foursquare from "foursquare-places";
 
-function App() {
+const App = props => {
   const [items, setItems] = useState([]);
 
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -18,18 +17,18 @@ function App() {
 
   useEffect(() => {
     foursquare.venues.getVenues(params).then(res => {
-      this.setState({ items: res.response.venues });
+      setItems(res.response.venues);
     });
   }, [foursquare, params]);
 
   return (
     <div>
       <div>Items:</div>
-      {this.state.items.map(item => {
+      {items.map(item => {
         return <div key={item.id}>{item.name}</div>;
       })}
     </div>
   );
-}
+};
 
 export default App;
